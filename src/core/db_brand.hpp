@@ -12,6 +12,9 @@
 #if defined(UCSB_HAS_LEVELDB)
 #include "src/leveldb/leveldb.hpp"
 #endif
+#if defined(UCSB_HAS_SPEEDB)
+#include "src/speedb/speedb.hpp"
+#endif
 #if defined(UCSB_HAS_WIREDTIGER)
 #include "src/wiredtiger/wiredtiger.hpp"
 #endif
@@ -33,6 +36,7 @@ enum class db_brand_t {
     ustore_k,
     rocksdb_k,
     leveldb_k,
+    speedb_k,
     wiredtiger_k,
     mongodb_k,
     redis_k,
@@ -48,6 +52,9 @@ std::shared_ptr<db_t> make_db(db_brand_t db_brand, bool transactional) {
 #if defined(UCSB_HAS_ROCKSDB)
         case db_brand_t::rocksdb_k: return std::make_shared<facebook::rocksdb_t>(facebook::db_mode_t::transactional_k);
 #endif
+#if defined(UCSB_HAS_SPEEDB)
+        case db_brand_t::speedb_k: return std::make_shared<speedb::speedb_t>();
+#endif
         default: break;
         }
     }
@@ -61,6 +68,9 @@ std::shared_ptr<db_t> make_db(db_brand_t db_brand, bool transactional) {
 #endif
 #if defined(UCSB_HAS_LEVELDB)
         case db_brand_t::leveldb_k: return std::make_shared<google::leveldb_t>();
+#endif
+#if defined(UCSB_HAS_SPEEDB)
+        case db_brand_t::speedb_k: return std::make_shared<speedb::speedb_t>();
 #endif
 #if defined(UCSB_HAS_WIREDTIGER)
         case db_brand_t::wiredtiger_k: return std::make_shared<mongo::wiredtiger_t>();
@@ -87,6 +97,8 @@ inline db_brand_t parse_db_brand(std::string const& name) {
         return db_brand_t::rocksdb_k;
     if (name == "leveldb")
         return db_brand_t::leveldb_k;
+    if (name == "speedb")
+        return db_brand_t::speedb_k;
     if (name == "wiredtiger")
         return db_brand_t::wiredtiger_k;
     if (name == "mongodb")
