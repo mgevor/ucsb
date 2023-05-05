@@ -20,6 +20,7 @@ db_names = [
     'ustore',
     'rocksdb',
     'leveldb',
+    'speedb',
     'wiredtiger',
     'mongodb',
     'redis',
