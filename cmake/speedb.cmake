@@ -43,6 +43,7 @@ ExternalProject_Add(
     -DWITH_BENCHMARK_TOOLS:BOOL=OFF
     -DWITH_TOOLS:BOOL=OFF
     -DWITH_CORE_TOOLS:BOOL=OFF
+    -DUSE_RTTI:BOOL=ON
 )
 
 set(speedb_INCLUDE_DIR ${PREFIX_DIR}/speedb-src/include)
@@ -50,6 +51,7 @@ set(speedb_LIBRARY_PATH ${PREFIX_DIR}/speedb-install/lib/libspeedb.a)
 
 file(MAKE_DIRECTORY ${speedb_INCLUDE_DIR})
 add_library(speedb STATIC IMPORTED)
+target_link_libraries(speedb INTERFACE uring)
 
 set_property(TARGET speedb PROPERTY IMPORTED_LOCATION ${speedb_LIBRARY_PATH})
 set_property(TARGET speedb APPEND PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${speedb_INCLUDE_DIR})

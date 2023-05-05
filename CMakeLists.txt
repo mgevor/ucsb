@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.20.1)
 #######################################################################################################################
 
 option(UCSB_BUILD_USTORE "Build USTORE for the benchmark" ON)
-option(UCSB_BUILD_ROCKSDB "Build RocksDB for the benchmark" ON)
+option(UCSB_BUILD_ROCKSDB "Build RocksDB for the benchmark" OFF)
 option(UCSB_BUILD_LEVELDB "Build LevelDB for the benchmark" ON)
 option(UCSB_BUILD_SPEEDB "Build Speedb for the benchmark" ON)
 option(UCSB_BUILD_WIREDTIGER "Build WiredTiger for the benchmark" ON)
